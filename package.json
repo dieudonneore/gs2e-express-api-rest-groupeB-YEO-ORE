@@ -1,0 +1,16 @@
+{
+  "name": "express-api-rest-jwt-mongo-groupe-b",
+  "version": "1.0.0",
+  "description": "groupe b express api rest with mongodb and jwt",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "ore & yeo",
+  "license": "ISC",
+  "dependencies": {
+    "dotenv": "^16.0.1",
+    "express": "^4.18.1",
+    "mongoose": "^6.4.4"
+  }
+}
