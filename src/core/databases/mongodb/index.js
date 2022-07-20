@@ -1,2 +1,2 @@
-const {mongoDatabase} = require('../mongodb');
-module.exports = mongoDatabase
+const {mongooseHelper} = require('../../../core/databases/mongodb/mongodb');
+module.exports = mongooseHelper

@@ -1,2 +1,2 @@
-const UserCnt = require('./user.cnt')
-module.exports = {UserCnt}
+const UserController = require('./user.cnt')
+module.exports = {UserController}
