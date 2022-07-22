@@ -11,9 +11,19 @@ class UserRoutes extends Router{
 
     getRoutes(){
 
-        this.app.get('/test', (req, res) =>{
+        /* this.app.get('/test', (req, res) =>{
             return Utils.apiResponse(res, UserController.testModules())
-        });
+        }); */
+
+        this.app.get('/allUsers', UserController.findAllUser)
+
+        this.app.get('/users/:id', UserController.findOneUser)
+        
+        this.app.post('/addUser', UserController.createUser)
+
+        this.app.put('/userUpdate/:id', UserController.updateUser)
+
+        this.app.delete('/userDeleted/:id', UserController.deleteUser)
 
     }
 }

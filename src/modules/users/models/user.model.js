@@ -7,24 +7,18 @@ const userSchema = new mongoose.Schema({
     nom: {
         type: String,
         require: true,
-        trim: true
     },
     prenom: {
         type: String,
         require: true,
-        trim: true
     },
     login: {
         required: true, 
         type: String,
-        unique: true,
-        trim: true,
-        lowercase: true
     },
     password:{
         required: true, 
         type: String,
-        trim: true,
         minlength: 7,
         validate(value){
            if(value.toLowerCase().includes('password')){
