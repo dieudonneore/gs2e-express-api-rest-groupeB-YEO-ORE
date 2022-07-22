@@ -1,6 +1,7 @@
 const express = require('express')
 const cors = require("cors");
 const Config = require('../utils/config')
+const bodyParser = require('body-parser')
 const mongooseHelper = require('../core/databases/mongodb/mongodb')
 
 const app = express()
@@ -11,6 +12,8 @@ class Server {
         this.app=app
         this.app.use(express.urlencoded({extended:true}))
         this.app.use(express.json())
+        this.app.use(bodyParser.json())
+        this.app.use(bodyParser.urlencoded({ extended: false }))
     }
 
     handleError400(){

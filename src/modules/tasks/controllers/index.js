@@ -1,2 +1,2 @@
-const {TaskCnt} = require('./task.cnt')
-module.exports = TaskCnt
+const {TaskController} = require('./task.cnt')
+module.exports = TaskController
