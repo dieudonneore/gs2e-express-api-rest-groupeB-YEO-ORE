@@ -1,4 +1,7 @@
 const UserModel = require('../models/user.model')
+const bcrypt = require('bcrypt')
+const Config = require('../../../utils/config')
+const jwt = require('jsonwebtoken')
 
 class UserController{
 
@@ -9,7 +12,7 @@ class UserController{
     } */
 
     // creation de user
-    static createUser (req, res){
+    static registerUser (req, res){
         const user = new UserModel({
             nom: req.body.nom,
             prenom:req.body.prenom,
@@ -19,11 +22,78 @@ class UserController{
             tokens: []
         });
         return user.save().then(data => {
-            res.json(data)
+            res.json({
+                message: "User Registered successfully",
+                user:data
+            })
         }).catch(err=>{
             console.log('errr')
         })
     };
+
+
+    static signinUser(req, res){
+        UserModel.findOne({login: req.body.login})
+                    .exec((err, user) => {
+                        if(err){
+                            res.status(500).send({message:err})
+                            return
+                        }
+                        if (!user) {
+                            return res.status(404)
+                              .send({
+                                message: "User Not found."
+                              });
+                        }
+
+                    //comparaison de mot de passwords
+                    const passwordIsValid = bcrypt.compareSync(req.body.password,user.password);
+
+                    // verifiez si password est correct
+                    if (!passwordIsValid) {
+                        return res.status(401)
+                        .send({
+                            accessToken: null,
+                            message: "Invalid Password!"
+                        });
+                    }
+
+                    //Se connecter avec token de user id
+                    var token = jwt.sign({id: user.id}, Config.apiSecret, {expiresIn: 86400});
+
+                    res.status(200).send({
+                        user: {
+                            id: user._id,
+                            login: user.login,
+                            fullName: user.nom + " "+ user.prenom,
+                        },
+                        message: "Login successfull",
+                        accessToken: token
+                        });
+
+        })
+    }
+
+
+    static verifyToken(req, res){
+        if (!user) {
+            res.status(403)
+              .send({
+                message: "Invalid JWT token"
+              });
+          }
+          if (req.user == "admin") {
+            res.status(200)
+              .send({
+                message: "Congratulations! but there is no hidden content"
+              });
+          } else {
+            res.status(403)
+              .send({
+                message: "Unauthorised access"
+              });
+          }
+    }
 
     // lire toutes les users
     static findAllUser(req, res){
